@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+	<h1>
+		{{ site_name }} - Neznámá stránka
+		{% if user.is_authenticated %}
+			&nbsp;<a href="/admin/" title="Administrace"><span class="glyphicon glyphicon-pencil"></span></a>
+		{% endif %}
+	</h1>
+	<div class="panel panel-info">
+		<div class="panel-heading">
+			<strong><span class="glyphicon glyphicon-alert"></span>&nbsp;&nbsp;Požadovanou stránku se nepodařio načíst</strong>
+		</div>
+		<div class="panel-body">
+			<p class="text-justify border">Zkontrolujte prosím zadanou URL adresu nebo nás kontaktujte a ohlašte chybu.</p>
+		</div>
+	</div>
+{% endblock content %}

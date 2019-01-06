@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap3 %}
+{% block content %}
+	<h1>
+		{{ site_name }} - Galerie
+		{% if user.is_authenticated %}
+			&nbsp;<a href="/admin/web/gallery/add/" title="Nová galerie"><span class="glyphicon glyphicon-pencil"></span></a>
+		{% endif %}
+	</h1>
+	{% for galleryObject in galleryList %}
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				<table style="width: 100%">
+					<tbody>
+						<tr>
+							<td>
+								<a href="/gallery/{{ galleryObject.0.gallery_id }}" title="Detail galerie">
+									<strong><span class="glyphicon glyphicon-picture"></span>&nbsp;&nbsp;{{ galleryObject.0.name }}</strong>
+								</a>
+								{% if user.is_authenticated %}
+									&nbsp;<a href="/admin/web/gallery/{{ galleryObject.0.gallery_id }}/change/" title="Upravit"><span class="glyphicon glyphicon-wrench"></span></a>
+								{% endif %}
+							</td>
+							<td style="text-align:right">
+								<span class="small"><strong>Index</strong> | {{ galleryObject.0.author.first_name }} {{ galleryObject.0.author.last_name }} | <span data-toggle="tooltip" title="Poslední úprava: {{ galleryObject.0.date_edited }}"><em>{{ galleryObject.0.date_created }}</em></span></span>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="panel-body">
+				<div class="col-md-12">
+					<p class="text-justify border">
+						{% autoescape off %}
+							{% if galleryObject.0.dscr|wordcount > 50 %}
+								{{ galleryObject.0.dscr|truncatewords:50 }} [<a href="/gallery/{{ galleryObject.0.gallery_id }}" title="Detail galerie">číst dál</a>]
+							{% else %}
+								{{ galleryObject.0.dscr }}
+							{% endif %}
+						{% endautoescape %}
+					</p>
+					<p class="text-justify border"><strong>Obrázky v galerii:</strong></p>
+					{% if galleryObject.1 > 0 %}
+						<table style="width: 100%; margin-bottom: 10px">
+							<tbody>
+								<tr>
+									{% for image in galleryObject.2 %}
+										<td style="text-align: center">
+											<a href="/gallery/{{ galleryObject.0.gallery_id }}/{{ image.image_id }}" title="Detail obrázku">
+												<img src="{{ image.image.url }}" alt="{{ image.name }}" title="Detail obrázku" height="120" width="160" style="border: 1px solid #000033;" />
+											</a>
+										</td>
+									{% endfor %}
+								</tr>
+							</tbody>
+						</table>
+						<p class="text-justify border">
+							Celkem <strong>{{ galleryObject.1 }}</strong>
+							{% if galleryObject.1 < 2 %}
+								obrázek
+							{% elif galleryObject.1 < 5 %}
+								obrázky
+							{% else %}
+								obrázků
+							{% endif %} 
+							[<a href="/gallery/{{ galleryObject.0.gallery_id }}" title="Detail galerie">zobrazit detail galerie</a>]</p>
+					{% else %}
+						<p class="text-justify border">Galerie neobsahuje žádné obrázky [<a href="/gallery/{{ galleryObject.0.gallery_id }}" title="Detail galerie">zobrazit detail galerie</a>]</p>
+					{% endif %}
+					<p class="text-justify border"><strong>Podkategorie:</strong></p>
+					<ul>
+						{% for gallery in galleryObject.3 %}
+							<li>
+								<a href="/gallery/{{ gallery.0.gallery_id }}" title="Detail galerie">{{ gallery.0.name }}</a> [{{ gallery.1 }}]
+							</li>
+						{% endfor %}
+					</ul>
+					<p class="text-justify border"><strong>Související články:</strong></p>
+					<ul>
+						{% for article in galleryObject.4 %}
+							<li>
+								<a href="/articles/{{ article.article_id }}" title="Detail článku">{{ article.name }}</a> [{{ article.author.first_name }} {{ article.author.last_name }}]
+							</li>
+						{% endfor %}
+					</ul>
+				</div>
+			</div>
+		</div>
+	{% endfor %}
+	<p class="item-counter">Celkem galerií: <strong>{{ itemCount.0 }}</strong> | Celkem obrázků: <strong>{{ itemCount.1 }}</strong></p>
+	{% if user.is_authenticated %}
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				<strong>Administrace</strong>
+			</div>
+			<div class="panel-body">
+				{% if status is not None %}
+					<p class="swStatusBar {{ status.style }}">{{ status.message }}</p>
+				{% endif %}
+				<div class="row">
+					<strong>&nbsp;&nbsp;Přidat nový obrázek:</strong>
+					<div class="form-wrapper">
+						<form method="post" action="/gallery/add" enctype="multipart/form-data">
+							{% csrf_token %}
+							<div class="form-group">{% bootstrap_form newImageForm %}</div>
+							<span data-toggle="tooltip" title="Přidat nový obrázek"><button type="submit" class="btn btn-warning"><span class="glyphicon glyphicon-share-alt"></span>&nbsp;&nbsp;Přidat nový obrázek</button></span>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endif %}
+{% endblock content %}

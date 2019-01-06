@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+	<h1>
+		{{ site_name }} - Články
+		{% if user.is_authenticated %}
+			&nbsp;<a href="/admin/web/article/add/" title="Nový článek"><span class="glyphicon glyphicon-pencil"></span></a>
+		{% endif %}
+	</h1>
+	{% if article is not None %}
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				<table style="width: 100%">
+					<tbody>
+						<tr>
+							<td>
+								<strong><span class="glyphicon glyphicon-education"></span>&nbsp;&nbsp;{{ article.name }}</strong>
+								{% if user.is_authenticated %}
+									&nbsp;<a href="/admin/web/article/{{ article.article_id }}/change/" title="Upravit"><span class="glyphicon glyphicon-wrench"></span></a>
+								{% endif %}
+							</td>
+							<td style="text-align:right">
+								<span class="small"><strong>{{ article.category.name }}</strong> | {{ article.author.first_name }} {{ article.author.last_name }} | <span data-toggle="tooltip" title="Poslední úprava: {{ article.date_edited }}"><em>{{ article.date_created }}</em></span></span>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="text-justify border">
+							<strong><em>{{ article.dscr|linebreaksbr }}</em></strong>
+						</div>
+						<hr />
+						<div style="float:left; margin-right: 15px; margin-bottom: 15px;">
+							{% if article.thumb == "article.png" %}
+								<img src="{% static 'article.png' %}" alt="{{ article.name }}" title="{{ article.name }}" height="180" width="240" />
+							{% else %}
+								<img src="{{ article.thumb.url }}" alt="{{ article.name }}" title="{{ article.name }}" height="180" width="240" />
+							{% endif %}
+						</div>
+						<div class="text-justify border">
+							{% autoescape off %}{{ article.content }}{% endautoescape %}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	{% else %}
+		<p class="lead">{{ msg }}</p>
+	{% endif %}
+{% endblock content %}

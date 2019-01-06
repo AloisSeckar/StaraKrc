@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+	<h1>
+		{{ site_name }} - Přihlášení pro správce
+		{% if user.is_authenticated %}
+			&nbsp;<a href="/admin/" title="Administrace"><span class="glyphicon glyphicon-pencil"></span></a>
+		{% endif %}
+	</h1>
+	<p class="lead">Odhlášení proběhlo úspěšně</p>
+	<a href="/login" class="btn btn-primary swButtonBottomPanel" role="button"><span class="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp;Přihlásit</a>
+{% endblock content %}

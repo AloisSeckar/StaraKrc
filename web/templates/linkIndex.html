@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+	<h1>
+		{{ site_name }} - Odkazy
+		{% if user.is_authenticated %}
+			&nbsp;<a href="/admin/web/link/add/" title="Nový odkaz"><span class="glyphicon glyphicon-pencil"></span></a>
+		{% endif %}
+	</h1>
+	{% for linkObject in linkList %}
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				<strong><span class="glyphicon glyphicon-globe"></span>&nbsp;&nbsp;{{ linkObject.0.name }}</strong>
+				{% if user.is_authenticated %}
+					&nbsp;<a href="/admin/web/category/{{ linkObject.0.cat_id }}/change/" title="Upravit"><span class="glyphicon glyphicon-wrench"></span></a>
+				{% endif %}
+			</div>
+			<div class="panel-body">
+				<p class="text-justify border">{{ linkObject.0.dscr }}</p>
+				<div class="table-responsive">
+					<table class="table table-hover">
+						<tbody>
+							{% for link in linkObject.1 %}
+								<tr>
+									<td style="width: 140px">
+										<a href="{{ link.url }}" title="{{ link.name }}">
+											{% if link.thumb == "link.png" %}
+												<img src="{% static 'link.png' %}" alt="{{ link.name }}" title="{{ link.name }}" height="90" width="120" />
+											{% else %}
+												<img src="{{ link.thumb.url }}" alt="{{ link.name }}" title="{{ link.name }}" height="90" width="120" />
+											{% endif %}
+										</a>
+									</td>
+									<td class="text-justify" style="vertical-align: middle">
+										<a href="{{ link.url }}" title="{{ link.name }}"><strong>{{ link.name }}</strong></a>
+										{% if user.is_authenticated %}
+											&nbsp;<a href="/admin/web/link/{{ link.link_id }}/change/" title="Upravit"><span class="glyphicon glyphicon-wrench"></span></a>
+										{% endif %}
+										<br />{{ link.dscr }}
+									</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	{% endfor %}
+	<p class="item-counter">Celkem odkazů: <strong>{{ linkCount }}</strong></p>
+{% endblock content %}

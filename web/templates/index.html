@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+	<h1>
+		{{ site_name }}
+		{% if user.is_authenticated %}
+			&nbsp;<a href="/admin/" title="Administrace"><span class="glyphicon glyphicon-pencil"></span></a>
+		{% endif %}
+	</h1>
+	<div class="panel panel-info">
+		<div class="panel-heading">
+			<strong><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;Historie městské části Praha-Krč</strong>
+		</div>
+		<div class="panel-body">
+			<p class="text-justify border">Vítejte na stránkách, kde bychom vám rádi on-line zprostředkovali naši sbírku starých pohledů a fotografií doplněných o informace o pražské Krči. Cílem je představit minulost této vesnice a později městské části všem návštěvníkům tohoto webu z řad zájemců o historii, místních obyvatel i náhodných návštěvníků. V <a href="/gallery">galerii</a> naleznete oskenované ukázky originálních pohledů, dobových materiálů a vlastních fotografií. V sekci <a href="/articles">články</a> se postupně objevují různá historická povídání a v oddílu <a href="/books">knihovna</a> odkazy na tematickou literaturu. Pokud vás toto téma zajímá a chtěli byste se dozvědět víc, nebo chcete přímo navázat kontakt a spolupráci, můžete nás <a href="/contact">kontaktovat</a>. V neposlední řadě nabízíme <a href="/links">odkazy</a> související se sbíráním starých pohledů, s výzkumem historie Prahy a dalšími zajímavými tématy.</p>
+			<p class="text-justify border"><strong>Alois Sečkár</strong> a <strong>Anton Sečkár</strong></p>
+			<p class="text-justify border">&copy; 2012 - 2019</p>
+		</div>
+	</div>
+	<div class="panel panel-info">
+		<div class="panel-heading">
+			<strong><span class="glyphicon glyphicon-envelope"></span>&nbsp;&nbsp;Kontakty</strong>
+		</div>
+		<div class="panel-body">
+			<div class="table-responsive">
+				<table class="table table-hover">
+					<tbody>
+						<tr>
+							<td><strong>Alois Sečkár</strong></td>
+							<td>seckar@svobodni.cz</td>
+							<td>721 302 700</td>
+							<td><a href="https://www.facebook.com/alois.seckar" title="Facebook"><img src="{% static 'facebook.png' %}" title="FB" alt="FB" width="24" /></a></td>
+						</tr> 
+						<tr>
+							<td><strong>Anton Sečkár</strong></td>
+							<td>rakcesa@seznam.cz</td>
+							<td>723 146 074</td>
+							<td><a href="https://www.facebook.com/anton.seckar" title="Facebook"><img src="{% static 'facebook.png' %}" title="FB" alt="FB" width="24" /></a></td>
+						</tr> 
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div class="panel panel-info">
+		<div class="panel-heading">
+			<a href="/news/" title="Přehled novinek">
+				<strong><span class="glyphicon glyphicon-bullhorn"></span>&nbsp;&nbsp;Novinky</strong>
+			</a>
+		</div>
+		<div class="panel-body">
+			<div class="table-responsive">
+				<table class="table table-hover">
+					<tbody>
+						{% for news in lastNews %}
+						<tr>
+							<td><strong>{{ news.date_created }}</strong></td>
+							<td>{{ news.author.first_name }} {{ news.author.last_name }}</td>
+							<td>{% autoescape off %} {{ news.content }} {% endautoescape %}</td>
+						</tr> 
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+			<p class="text-justify border">[<a href="/news/" title="Přehled novinek">všechny novinky</a>]</p>
+		</div>
+	</div>
+{% endblock content %}

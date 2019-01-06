@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+	<h1>
+		{{ site_name }} - Novinky
+		{% if user.is_authenticated %}
+			&nbsp;<a href="/admin/web/news/add/" title="Přidat novinku"><span class="glyphicon glyphicon-pencil"></span></a>
+		{% endif %}
+	</h1>
+	<div class="panel panel-info">
+		<div class="panel-heading">
+			<strong><span class="glyphicon glyphicon-bullhorn"></span>&nbsp;&nbsp;Novinky</strong>
+		</div>
+		<div class="panel-body">
+			<div class="table-responsive">
+				<table class="table table-hover">
+					<tbody>
+						{% for news in allNews %}
+						<tr>
+							<td><strong>{{ news.date_created }}</strong></td>
+							<td>{{ news.author.first_name }} {{ news.author.last_name }}</td>
+							<td>{% autoescape off %} {{ news.content }} {% endautoescape %}</td>
+						</tr> 
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<p class="item-counter">Celkem novinek: <strong>{{ allNews.count }}</strong></p>
+{% endblock content %}

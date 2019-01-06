@@ -1,0 +1,147 @@
+.header-image {
+	height: 120px;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: 100% 120px;"
+}
+
+.custom-navbar {
+	width: 100%; 
+	background-color: #000033;
+}
+
+.nav {
+	font-size: 17px;
+}
+
+.panel {
+	font-size: 15px;
+}
+
+.panel > .panel-heading {
+    background-image: none;
+    background-color: #000033;
+	color: #cccccc;
+	font-size: 18px;
+}
+
+.navbar-nav > li > a:link {
+	color: #cccccc;
+}
+
+.navbar-nav > li > a:visited {
+	color: #cccccc;
+}
+
+.panel > .panel-heading a:link {
+	color: #cccccc;
+}
+
+.panel > .panel-heading a:visited {
+	color: #cccccc;
+}
+
+.panel > .panel-heading a:hover {
+	color: white;
+}
+
+.panel > .panel-heading a:active {
+	color: white;
+}
+
+.panel > .panel-body a:link {
+	color: #000066;
+}
+
+.panel > .panel-body a:visited {
+	color: #000066;
+}
+
+.panel > .panel-body a:hover {
+	color: #337ab7;
+}
+
+.panel > .panel-body a:active {
+	color: #337ab7;
+}
+
+.p > .index a:link {
+	color: #000066;
+}
+
+.p > .index a:visited {
+	color: #000066;
+}
+
+.p > .index a:hover {
+	color: #337ab7;
+}
+
+.p > .index a:active {
+	color: #337ab7;
+}
+
+.footer > .div a:link {
+	color: #cccccc;
+}
+
+.footer > .div a:visited {
+	color: #cccccc;
+}
+
+.footer > .div a:hover {
+	color: white;
+}
+
+.footer > .div a:active {
+	color: white;
+}
+
+.table {
+	margin-bottom: 0px;
+	font-size: 15px;
+}
+
+.gallery-item {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	border: 1px solid #000033;
+}
+
+.gallery-image {
+	border: 1px solid #000033;
+}
+
+.gallery-image-nav {
+	margin-top: 10px;
+	margin-bottom: 5px;
+	font-size: 25px;
+}
+
+p {
+	text-align: justify;
+	margin-bottom: 5px;
+}
+
+.navbar {
+	margin-bottom: 0px;
+}
+
+h1 {
+	font-size: 25px;
+	font-weight: bold;
+	color: #000033;
+	margin-top: 10px;
+}
+
+.item-counter {
+	font-size: 20px;
+	color: #000033;
+	margin-bottom: 20px;
+}
+
+.form-wrapper {
+	border: 1px solid #000033;
+	margin: 10px;
+	padding: 10px;
+}

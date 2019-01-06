@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+	<h1>
+		{{ site_name }} - Knihovna
+		{% if user.is_authenticated %}
+			&nbsp;<a href="/admin/web/book/add/" title="Nová kniha"><span class="glyphicon glyphicon-pencil"></span></a>
+		{% endif %}
+	</h1>
+	{% for bookObject in bookList %}
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				<strong><span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;{{ bookObject.0.name }}</strong>
+				{% if user.is_authenticated %}
+					&nbsp;<a href="/admin/web/category/{{ bookObject.0.cat_id }}/change/" title="Upravit"><span class="glyphicon glyphicon-wrench"></span></a>
+				{% endif %}
+			</div>
+			<div class="panel-body">
+				<p class="text-justify border">{{ bookObject.0.dscr }}</p>
+				<div class="table-responsive">
+					<table class="table table-hover">
+						<tbody>
+							{% for book in bookObject.1 %}
+								<tr>
+									<td style="width: 140px">
+										<a href="{{ book.url }}" title="{{ book.name }}">
+											{% if book.thumb == "book.png" %}
+												<img src="{% static 'book.png' %}" alt="{{ book.name }}" title="{{ book.name }}" height="160" width="120" />
+											{% else %}
+												<img src="{{ book.thumb.url }}" alt="{{ book.name }}" title="{{ book.name }}" height="160" width="120" />
+											{% endif %}
+										</a>
+									</td>
+									<td class="text-justify" style="vertical-align: middle">
+										<a href="{{ book.url }}" title="{{ book.name }}"><strong>{{ book.name }}</strong></a>
+										{% if user.is_authenticated %}
+											&nbsp;<a href="/admin/web/book/{{ book.book_id }}/change/" title="Upravit"><span class="glyphicon glyphicon-wrench"></span></a>
+										{% endif %}
+										<br /><strong><em>
+											{{ book.writer }}, {{ book.year }}
+											{% if book.review is not none %}
+												&nbsp;[<a href="{{ book.review }}" title="Recenze knihy">Recenze</a>]
+											{% endif %}
+										</em></strong>
+										<br />{{ book.dscr }}
+									</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	{% endfor %}
+	<p class="item-counter">Celkem knih: <strong>{{ bookCount }}</strong></p>
+{% endblock content %}

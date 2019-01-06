@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="cs">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>{{ site_name }}</title>
+		<!-- BOOTSTRAP CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+		<!-- CUSTOM CSS -->
+		<link rel="stylesheet"  type="text/css" href="{% static 'css/ellhistory.css' %}" />
+		<!-- ICON -->
+		<link rel="shortcut icon" type="image/png" href="{% static 'favicon.png' %}"/>
+	</head>
+	<body style="background-color: {{ site_bg }};">
+		<nav class="navbar navbar-inverse">
+			<div style="width: 100%; height: 120px; background-color: {{ site_bg }};">
+				<div class="header-image" style="background-image: url('{% static 'header.png' %}');"></div>
+			</div>
+			<div class="custom-navbar">
+				<div class="container">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+					</div>
+					<div id="navbar" class="collapse navbar-collapse">
+						<ul class="nav navbar-nav">
+							<li><a href="/"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;{{ site_name }}</a></li>
+							<li><a href="/articles"><span class="glyphicon glyphicon-education"></span>&nbsp;&nbsp;Články</a></li>
+							<li><a href="/gallery"><span class="glyphicon glyphicon-picture"></span>&nbsp;&nbsp;Galerie</a></li>
+							<li><a href="/books"><span class="glyphicon glyphicon-book"></span> &nbsp;&nbsp;Knihovna</a></li>
+							<li><a href="/links"><span class="glyphicon glyphicon-globe"></span>&nbsp;&nbsp;Odkazy</a></li>
+						</ul>
+					</div><!--/.nav-collapse -->
+				</div>
+			</div>
+		</nav>
+		
+		<div class="container">
+			<div class="starter-template">
+				{% block content %}
+				{% endblock %}
+				<p></p>
+				{% with '"/","/login","/logout"' as urls %}
+					{% if not request.path in urls %}
+						<a href="#" class="btn btn-primary swButtonBottomPanel" role="button"><span class="glyphicon glyphicon-arrow-up"></span>&nbsp;&nbsp;Nahoru</a>
+						{% if request.META.HTTP_REFERER is not None %}
+							<a href="{{request.META.HTTP_REFERER}}" class="btn btn-default swButtonBottomPanel" role="button"><span class="glyphicon glyphicon-backward"></span>&nbsp;&nbsp;Zpět</a>
+						{% endif %}
+						<a href="/" class="btn btn-info swButtonBottomPanel" role="button"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;Index</a>
+					{% endif %}
+				{% endwith %}
+				{% if toplist_url is not None %}
+					<div style="margin-top: 10px"><a href="{{ toplist_url }}" title="Počítadlo přístupů"><img src="{{ toplist_img }}" border="0" alt="TOPlist" width="88" height="60" /></div>
+				{% endif %}
+				<p><br /></p><p><br /></p>
+			</div>
+			<footer>
+				<div style="position: fixed; width: 100%; height=10em; left: 0; bottom: 0; background-color: #333333; color: #cccccc;">
+					<p style="margin: 5px; text-align: center;">&copy; 2019 <strong>{{ site_name }}</strong> by <a href="http://alois-seckar.cz/">Alois Sečkár</a>
+						{% if user.is_authenticated %}
+							|| <span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;{{ user.username }}
+							| <a href="/admin">Administrace</a>
+							| <a href="/logout">Odhlásit</a>
+						{% else %}
+							| <a href="/login"><span class="glyphicon glyphicon-lock"></span></a>
+						{% endif %}
+					</p>
+				</div>
+			</footer>
+		</div><!-- /.container -->
+		
+		<!-- Bootstrap core JavaScript
+		================================================== -->
+		<!-- Placed at the end of the document so the pages load faster -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+		<script src="../../dist/js/bootstrap.min.js"></script>
+		<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+		<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+	</body>
+</html>

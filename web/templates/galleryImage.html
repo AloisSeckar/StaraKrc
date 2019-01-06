@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap3 %}
+{% block content %}
+	<h1>
+		{{ site_name }} - Galerie
+		{% if user.is_authenticated %}
+			&nbsp;<a href="/admin/web/gallery/add/" title="Nová galerie"><span class="glyphicon glyphicon-pencil"></span></a>
+		{% endif %}
+	</h1>
+	{% if gallery is not None and image is not None %}
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				<table style="width: 100%">
+					<tbody>
+						<tr>
+							<td>
+								<strong><span class="glyphicon glyphicon-picture"></span>&nbsp;&nbsp;{{ image.name }}</strong>
+								{% if user.is_authenticated %}
+									&nbsp;<a href="/admin/web/image/{{ image.image_id }}/change/" title="Upravit"><span class="glyphicon glyphicon-wrench"></span></a>
+								{% endif %}
+							</td>
+							<td style="text-align:right">
+								<span class="small"><strong><a href="/gallery/{{ gallery.gallery_id }}" title="Nadřazená galerie">{{ gallery.name }}</a></strong>
+								| {{ image.author.first_name }} {{ image.author.last_name }} | <span data-toggle="tooltip" title="Poslední úprava: {{ image.date_edited }}"><em>{{ image.date_created }}</em></span></span>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="text-justify border">
+							<em>
+								{% if image.has_dscr %}
+									{% autoescape off %}{{ image.dscr }}{% endautoescape %}
+								{% else %}
+									Popis není k dispozici...
+								{% endif %}
+							</em>
+						</div>
+						<div class="text-center border gallery-image-nav">
+							{% if user.is_authenticated %}
+								{% if image.prev is not None %}
+									<a href="/gallery/{{ gallery.gallery_id }}/{{ image.image_id }}/prev" title="Přesunout v galerii vzad"><span class="glyphicon glyphicon-backward"></span></a>
+								{% else %}
+									<span class="glyphicon glyphicon-backward" data-toggle="tooltip" title="První obrázek v galerii"></span>
+								{% endif %}
+								&nbsp;&nbsp;
+							{% endif %}
+							{% if image.prev is not None %}
+								<a href="/gallery/{{ gallery.gallery_id }}/{{ image.prev.image_id }}" title="Předchozí obrázek"><span class="glyphicon glyphicon-triangle-left"></span></a>
+							{% else %}
+								<span class="glyphicon glyphicon-triangle-left" data-toggle="tooltip" title="První obrázek v galerii"></span>
+							{% endif %}
+							<a href="/gallery/{{ gallery.gallery_id }}" title="Zobrazit celou galerii"><span class="glyphicon glyphicon-stop"></span></a>
+							{% if image.next is not None %}
+								<a href="/gallery/{{ gallery.gallery_id }}/{{ image.next.image_id }}" title="Následující obrázek"><span class="glyphicon glyphicon-triangle-right"></span></a>
+							{% else %}
+								<span class="glyphicon glyphicon-triangle-right" data-toggle="tooltip" title="Poslední obrázek v galerii"></span>
+							{% endif %}
+							{% if user.is_authenticated %}
+								&nbsp;&nbsp;
+								{% if image.next is not None %}
+									<a href="/gallery/{{ gallery.gallery_id }}/{{ image.image_id }}/next" title="Přesunout v galerii vpřed"><span class="glyphicon glyphicon-forward"></span></a>
+								{% else %}
+									<span class="glyphicon glyphicon-forward" data-toggle="tooltip" title="Poslední obrázek v galerii"></span>
+								{% endif %}
+							{% endif %}
+						</div>
+						<div class="text-center border">
+							<img src="{{ image.image.url }}" alt="{{ image.name }}" title="{{ image.name }}" width="75%" class="gallery-image" />
+						</div>
+						<div class="text-center border gallery-image-nav">
+							{% if user.is_authenticated %}
+								{% if image.prev is not None %}
+									<a href="/gallery/{{ gallery.gallery_id }}/{{ image.image_id }}/prev" title="Přesunout v galerii vzad"><span class="glyphicon glyphicon-backward"></span></a>
+								{% else %}
+									<span class="glyphicon glyphicon-backward" data-toggle="tooltip" title="První obrázek v galerii"></span>
+								{% endif %}
+								&nbsp;&nbsp;
+							{% endif %}
+							{% if image.prev is not None %}
+								<a href="/gallery/{{ gallery.gallery_id }}/{{ image.prev.image_id }}" title="Předchozí obrázek"><span class="glyphicon glyphicon-triangle-left"></span></a>
+							{% else %}
+								<span class="glyphicon glyphicon-triangle-left" data-toggle="tooltip" title="První obrázek v galerii"></span>
+							{% endif %}
+							<a href="/gallery/{{ gallery.gallery_id }}" title="Zobrazit celou galerii"><span class="glyphicon glyphicon-stop"></span></a>
+							{% if image.next is not None %}
+								<a href="/gallery/{{ gallery.gallery_id }}/{{ image.next.image_id }}" title="Následující obrázek"><span class="glyphicon glyphicon-triangle-right"></span></a>
+							{% else %}
+								<span class="glyphicon glyphicon-triangle-right" data-toggle="tooltip" title="Poslední obrázek v galerii"></span>
+							{% endif %}
+							{% if user.is_authenticated %}
+								&nbsp;&nbsp;
+								{% if image.next is not None %}
+									<a href="/gallery/{{ gallery.gallery_id }}/{{ image.image_id }}/next" title="Přesunout v galerii vpřed"><span class="glyphicon glyphicon-forward"></span></a>
+								{% else %}
+									<span class="glyphicon glyphicon-forward" data-toggle="tooltip" title="Poslední obrázek v galerii"></span>
+								{% endif %}
+							{% endif %}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		{% if user.is_authenticated %}
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					<strong>Administrace</strong>
+				</div>
+				<div class="panel-body">
+					{% if status is not None %}
+						<p class="swStatusBar {{ status.style }}">{{ status.message }}</p>
+					{% endif %}
+					<div class="row">
+						<strong>&nbsp;&nbsp;Upravit aktuální obrázek:</strong>
+						<div class="form-wrapper">
+							<table style="width: 100%">
+								<tr>
+									<td>
+										<form class="form-inline" method="post" action="/gallery/{{ gallery.gallery_id }}/{{ image.image_id }}/move">
+											{% csrf_token %}
+											<div class="form-group">{% bootstrap_form moveImageForm %}</div>
+											<span data-toggle="tooltip" title="Přesunout do vybrané galerie"><button type="submit" class="btn btn-warning"><span class="glyphicon glyphicon-share-alt"></span>&nbsp;&nbsp;Přesunout obrázek</button></span>
+										</form>
+									</td>
+									<td>
+										<a href="/admin/web/image/{{ image.image_id }}/change/">
+											<span data-toggle="tooltip" title="Upravit data obrázku"><button type="submit" class="btn btn-warning"><span class="glyphicon glyphicon-wrench"></span>&nbsp;&nbsp;Upravit obrázek</button></span>
+										</a>
+									</td>
+									<td>
+										<a href="/gallery/{{ gallery.gallery_id }}/{{ image.image_id }}/delete" onclick="return confirmation()">
+											<span data-toggle="tooltip" title="Odstranit tento obrázek"><button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span>&nbsp;&nbsp;Smazat obrázek</button></span>
+										</a>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+					<div class="row">
+						<strong>&nbsp;&nbsp;Přidat nový obrázek:</strong>
+						<div class="form-wrapper">
+							<form method="post" action="/gallery/add" enctype="multipart/form-data">
+								{% csrf_token %}
+								<div class="form-group">{% bootstrap_form newImageForm %}</div>
+								<span data-toggle="tooltip" title="Přidat nový obrázek"><button type="submit" class="btn btn-warning"><span class="glyphicon glyphicon-share-alt"></span>&nbsp;&nbsp;Přidat nový obrázek</button></span>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		{% endif %}
+	{% else %}
+		<p class="lead">{{ msg }}</p>
+	{% endif %}
+	<script type="text/javascript">
+		function confirmation() {
+			return confirm('Opravdu smazat obrázek?');
+		}
+	</script>
+{% endblock content %}
