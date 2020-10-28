@@ -11,45 +11,50 @@
 	{% for bookObject in bookList %}
 		<div class="panel panel-info">
 			<div class="panel-heading">
-				<strong><span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;{{ bookObject.0.name }}</strong>
-				{% if user.is_authenticated %}
-					&nbsp;<a href="/admin/web/category/{{ bookObject.0.cat_id }}/change/" title="Upravit"><span class="glyphicon glyphicon-wrench"></span></a>
-				{% endif %}
+				<div class="row">
+					<div class="col-md-12">
+						<strong><span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;{{ bookObject.0.name }}</strong>
+						{% if user.is_authenticated %}
+							&nbsp;<a href="/admin/web/category/{{ bookObject.0.cat_id }}/change/" title="Upravit"><span class="glyphicon glyphicon-wrench"></span></a>
+						{% endif %}
+					</div>
+				</div>
 			</div>
 			<div class="panel-body">
-				<p class="text-justify border">{{ bookObject.0.dscr }}</p>
-				<div class="table-responsive">
-					<table class="table table-hover">
-						<tbody>
-							{% for book in bookObject.1 %}
-								<tr>
-									<td style="width: 140px">
-										<a href="{{ book.url }}" title="{{ book.name }}">
-											{% if book.thumb == "book.png" %}
-												<img src="{% static 'book.png' %}" alt="{{ book.name }}" title="{{ book.name }}" height="160" width="120" />
-											{% else %}
-												<img src="{{ book.thumb.url }}" alt="{{ book.name }}" title="{{ book.name }}" height="160" width="120" />
-											{% endif %}
-										</a>
-									</td>
-									<td class="text-justify" style="vertical-align: middle">
-										<a href="{{ book.url }}" title="{{ book.name }}"><strong>{{ book.name }}</strong></a>
-										{% if user.is_authenticated %}
-											&nbsp;<a href="/admin/web/book/{{ book.book_id }}/change/" title="Upravit"><span class="glyphicon glyphicon-wrench"></span></a>
-										{% endif %}
-										<br /><strong><em>
-											{{ book.writer }}, {{ book.year }}
-											{% if book.review is not none %}
-												&nbsp;[<a href="{{ book.review }}" title="Recenze knihy">Recenze</a>]
-											{% endif %}
-										</em></strong>
-										<br />{{ book.dscr }}
-									</td>
-								</tr>
-							{% endfor %}
-						</tbody>
-					</table>
+				<div class="row">
+					<div class="col-md-12">
+						<p class="text-justify border">{{ bookObject.0.dscr }}</p>
+					</div>
 				</div>
+				
+				{% for book in bookObject.1 %}
+				<div class="row">
+					<div class="col-md-2 text-center">
+						<a href="{{ book.url }}" title="{{ book.name }}">
+							{% if book.thumb == "book.png" %}
+								<img src="{% static 'book.png' %}" alt="{{ book.name }}" title="{{ book.name }}" height="160" width="120" />
+							{% else %}
+								<img src="{{ book.thumb.url }}" alt="{{ book.name }}" title="{{ book.name }}" height="160" width="120" />
+							{% endif %}
+						</a>
+					</div>
+					<div class="col-md-10">
+						<p class="text-justify border">
+							<a href="{{ book.url }}" title="{{ book.name }}"><strong>{{ book.name }}</strong></a>
+							{% if user.is_authenticated %}
+								&nbsp;<a href="/admin/web/book/{{ book.book_id }}/change/" title="Upravit"><span class="glyphicon glyphicon-wrench"></span></a>
+							{% endif %}
+							<br /><strong><em>
+								{{ book.writer }}, {{ book.year }}
+								{% if book.review is not none %}
+									&nbsp;[<a href="{{ book.review }}" title="Recenze knihy">Recenze</a>]
+								{% endif %}
+							</em></strong>
+							<br />{{ book.dscr }}
+						</p>
+					</div>
+				</div>
+				{% endfor %}
 			</div>
 		</div>
 	{% endfor %}

@@ -1,8 +1,8 @@
 .header-image {
 	height: 120px;
 	background-position: center;
-	background-repeat: no-repeat;
-	background-size: 100% 120px;"
+	background-repeat: repeat-x;
+	background-size: auto 120px;"
 }
 
 .custom-navbar {
@@ -23,6 +23,16 @@
     background-color: #000033;
 	color: #cccccc;
 	font-size: 18px;
+}
+
+@media screen and (max-width: 992px) {
+	.panel > .panel-heading > .row {
+		text-align: center !important;
+	}
+	
+	.panel > .panel-heading > .row > .text-right {
+		text-align: center !important;
+	}
 }
 
 .navbar-nav > li > a:link {
@@ -63,6 +73,10 @@
 
 .panel > .panel-body a:active {
 	color: #337ab7;
+}
+
+.panel > .panel-body > .row {
+	margin-top: 10px;
 }
 
 .p > .index a:link {
@@ -110,6 +124,7 @@
 
 .gallery-image {
 	border: 1px solid #000033;
+	width: 75%;
 }
 
 .gallery-image-nav {
@@ -118,8 +133,41 @@
 	font-size: 25px;
 }
 
+.gallery-thumb {
+	border: 1px solid #000033;
+	width: 90%;
+	height: 120px;
+	margin: 5px auto;
+}
+
+
+@media screen and (max-width: 992px) {
+	.gallery-thumb {
+		width: 60%;
+		height: 250px;
+	}
+	
+	.gallery-image {
+		width: 90%;
+	}
+}
+
+@media screen and (max-width: 600px) {
+	.gallery-thumb {
+		width: 90%;
+		height: 200px;
+	}
+}
+
+@media screen and (max-width: 400px) {
+	.gallery-thumb {
+		height: 150px;
+	}
+}
+
 p {
 	text-align: justify;
+	margin-top: 5px;
 	margin-bottom: 5px;
 }
 

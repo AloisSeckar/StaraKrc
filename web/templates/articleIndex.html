@@ -11,43 +11,35 @@
 	{% for article in articles %}
 		<div class="panel panel-info">
 			<div class="panel-heading">
-				<table style="width: 100%">
-					<tbody>
-						<tr>
-							<td>
-								<a href="/articles/{{ article.article_id }}" title="Detail článku">
-									<strong><span class="glyphicon glyphicon-education"></span>&nbsp;&nbsp;{{ article.name }}</strong>
-								</a>
-								{% if user.is_authenticated %}
-									&nbsp;<a href="/admin/web/article/{{ article.article_id }}/change/" title="Upravit"><span class="glyphicon glyphicon-wrench"></span></a>
-								{% endif %}
-							</td>
-							<td style="text-align:right">
-								<span class="small"><strong>{{ article.category.name }}</strong> | {{ article.author.first_name }} {{ article.author.last_name }} | <span data-toggle="tooltip" title="Poslední úprava: {{ article.date_edited }}"><em>{{ article.date_created }}</em></span></span>
-							</td>
-						</tr>
-					</tbody>
-				</table>
+				<div class="row">
+					<div class="col-md-6">
+						<a href="/articles/{{ article.article_id }}" title="Detail článku">
+							<strong><span class="glyphicon glyphicon-education"></span>&nbsp;&nbsp;{{ article.name }}</strong>
+						</a>
+						{% if user.is_authenticated %}
+							&nbsp;<a href="/admin/web/article/{{ article.article_id }}/change/" title="Upravit"><span class="glyphicon glyphicon-wrench"></span></a>
+						{% endif %}
+					</div>
+					<div class="col-md-6 text-right">
+						<span class="small"><strong>{{ article.category.name }}</strong> | {{ article.author.first_name }} {{ article.author.last_name }} | <span data-toggle="tooltip" title="Poslední úprava: {{ article.date_edited }}"><em>{{ article.date_created }}</em></span></span>
+					</div>
+				</div>
 			</div>
 			<div class="panel-body">
-				<table style="width: 100%">
-					<tbody>
-						<tr>
-							<td style="width: 140px">
-								<a href="/articles/{{ article.article_id }}" title="Detail článku">
-									{% if article.thumb == "article.png" %}
-										<img src="{% static 'article.png' %}" alt="{{ article.name }}" title="Detail článku" height="90" width="120" />
-									{% else %}
-										<img src="{{ article.thumb.url }}" alt="{{ article.name }}" title="Detail článku" height="90" width="120" />
-									{% endif %}
-								</a>
-							</td>
-							<td>
-								<p class="text-justify border">{{ article.dscr }}<br />[<a href="/articles/{{ article.article_id }}" title="Detail článku">číst článek</a>]</p>
-							</td>
-						</tr>
-					</tbody>
-				</table>
+				<div class="row">
+					<div class="col-md-2 text-center">
+						<a href="/articles/{{ article.article_id }}" title="Detail článku">
+							{% if article.thumb == "article.png" %}
+								<img src="{% static 'article.png' %}" alt="{{ article.name }}" title="Detail článku" style="90" width="120" />
+							{% else %}
+								<img src="{{ article.thumb.url }}" alt="{{ article.name }}" title="Detail článku" height="90" width="120" />
+							{% endif %}
+						</a>
+					</div>
+					<div class="col-md-10">
+						<p class="text-justify border">{{ article.dscr }}<br />[<a href="/articles/{{ article.article_id }}" title="Detail článku">číst článek</a>]</p>
+					</div>
+				</div>
 			</div>
 		</div>
 	{% endfor %}

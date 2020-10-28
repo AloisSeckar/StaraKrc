@@ -13,19 +13,12 @@
 			<strong><span class="glyphicon glyphicon-bullhorn"></span>&nbsp;&nbsp;Novinky</strong>
 		</div>
 		<div class="panel-body">
-			<div class="table-responsive">
-				<table class="table table-hover">
-					<tbody>
-						{% for news in allNews %}
-						<tr>
-							<td><strong>{{ news.date_created }}</strong></td>
-							<td>{{ news.author.first_name }} {{ news.author.last_name }}</td>
-							<td>{% autoescape off %} {{ news.content }} {% endautoescape %}</td>
-						</tr> 
-						{% endfor %}
-					</tbody>
-				</table>
+			{% for news in allNews %}
+			<div class="row">
+				<div class="col-md-3 text-center"><strong>{{ news.date_created }}</strong> {{ news.author.first_name }} {{ news.author.last_name }}</div>
+				<div class="col-md-9 text-justify">{% autoescape off %} {{ news.content }} {% endautoescape %}</div>
 			</div>
+			{% endfor %}
 		</div>
 	</div>
 	<p class="item-counter">Celkem novinek: <strong>{{ allNews.count }}</strong></p>

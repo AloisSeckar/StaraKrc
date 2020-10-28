@@ -11,21 +11,17 @@
 	{% if article is not None %}
 		<div class="panel panel-info">
 			<div class="panel-heading">
-				<table style="width: 100%">
-					<tbody>
-						<tr>
-							<td>
-								<strong><span class="glyphicon glyphicon-education"></span>&nbsp;&nbsp;{{ article.name }}</strong>
-								{% if user.is_authenticated %}
-									&nbsp;<a href="/admin/web/article/{{ article.article_id }}/change/" title="Upravit"><span class="glyphicon glyphicon-wrench"></span></a>
-								{% endif %}
-							</td>
-							<td style="text-align:right">
-								<span class="small"><strong>{{ article.category.name }}</strong> | {{ article.author.first_name }} {{ article.author.last_name }} | <span data-toggle="tooltip" title="Poslední úprava: {{ article.date_edited }}"><em>{{ article.date_created }}</em></span></span>
-							</td>
-						</tr>
-					</tbody>
-				</table>
+				<div class="row">
+					<div class="col-md-6">
+						<strong><span class="glyphicon glyphicon-education"></span>&nbsp;&nbsp;{{ article.name }}</strong>
+						{% if user.is_authenticated %}
+							&nbsp;<a href="/admin/web/article/{{ article.article_id }}/change/" title="Upravit"><span class="glyphicon glyphicon-wrench"></span></a>
+						{% endif %}
+					</div>
+					<div class="col-md-6 text-right">
+						<span class="small"><strong>{{ article.category.name }}</strong> | {{ article.author.first_name }} {{ article.author.last_name }} | <span data-toggle="tooltip" title="Poslední úprava: {{ article.date_edited }}"><em>{{ article.date_created }}</em></span></span>
+					</div>
+				</div>
 			</div>
 			<div class="panel-body">
 				<div class="row">

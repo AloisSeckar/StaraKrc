@@ -11,39 +11,44 @@
 	{% for linkObject in linkList %}
 		<div class="panel panel-info">
 			<div class="panel-heading">
-				<strong><span class="glyphicon glyphicon-globe"></span>&nbsp;&nbsp;{{ linkObject.0.name }}</strong>
-				{% if user.is_authenticated %}
-					&nbsp;<a href="/admin/web/category/{{ linkObject.0.cat_id }}/change/" title="Upravit"><span class="glyphicon glyphicon-wrench"></span></a>
-				{% endif %}
+				<div class="row">
+					<div class="col-md-12">
+						<strong><span class="glyphicon glyphicon-globe"></span>&nbsp;&nbsp;{{ linkObject.0.name }}</strong>
+						{% if user.is_authenticated %}
+							&nbsp;<a href="/admin/web/category/{{ linkObject.0.cat_id }}/change/" title="Upravit"><span class="glyphicon glyphicon-wrench"></span></a>
+						{% endif %}
+					</div>
+				</div>
 			</div>
 			<div class="panel-body">
-				<p class="text-justify border">{{ linkObject.0.dscr }}</p>
-				<div class="table-responsive">
-					<table class="table table-hover">
-						<tbody>
-							{% for link in linkObject.1 %}
-								<tr>
-									<td style="width: 140px">
-										<a href="{{ link.url }}" title="{{ link.name }}">
-											{% if link.thumb == "link.png" %}
-												<img src="{% static 'link.png' %}" alt="{{ link.name }}" title="{{ link.name }}" height="90" width="120" />
-											{% else %}
-												<img src="{{ link.thumb.url }}" alt="{{ link.name }}" title="{{ link.name }}" height="90" width="120" />
-											{% endif %}
-										</a>
-									</td>
-									<td class="text-justify" style="vertical-align: middle">
-										<a href="{{ link.url }}" title="{{ link.name }}"><strong>{{ link.name }}</strong></a>
-										{% if user.is_authenticated %}
-											&nbsp;<a href="/admin/web/link/{{ link.link_id }}/change/" title="Upravit"><span class="glyphicon glyphicon-wrench"></span></a>
-										{% endif %}
-										<br />{{ link.dscr }}
-									</td>
-								</tr>
-							{% endfor %}
-						</tbody>
-					</table>
+				<div class="row">
+					<div class="col-md-12">
+						<p class="text-justify border">{{ linkObject.0.dscr }}</p>
+					</div>
 				</div>
+				
+				{% for link in linkObject.1 %}
+				<div class="row">
+					<div class="col-md-2 text-center">
+						<a href="{{ link.url }}" title="{{ link.name }}">
+							{% if link.thumb == "link.png" %}
+								<img src="{% static 'link.png' %}" alt="{{ link.name }}" title="{{ link.name }}" height="90" width="120" />
+							{% else %}
+								<img src="{{ link.thumb.url }}" alt="{{ link.name }}" title="{{ link.name }}" height="90" width="120" />
+							{% endif %}
+						</a>
+					</div>
+					<div class="col-md-10">
+						<p class="text-justify border">
+							<a href="{{ link.url }}" title="{{ link.name }}"><strong>{{ link.name }}</strong></a>
+							{% if user.is_authenticated %}
+								&nbsp;<a href="/admin/web/link/{{ link.link_id }}/change/" title="Upravit"><span class="glyphicon glyphicon-wrench"></span></a>
+							{% endif %}
+							<br />{{ link.dscr }}
+						</p>
+					</div>
+				</div>
+				{% endfor %}
 			</div>
 		</div>
 	{% endfor %}
