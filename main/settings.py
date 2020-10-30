@@ -25,7 +25,7 @@ SECRET_KEY = 'do%98oyzmjg%)m_@-$jqrs80+s!+6=nv-m4e5_^9i#)8ngk7gu'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', 'krc-historie.cz']
 
 
 # Application definition
@@ -121,17 +121,18 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
-STATIC_ROOT = '/static/'
+STATIC_ROOT = '/srv/app/static/'
 STATIC_URL = '/static/'
-SITE_ROOT = os.path.normpath(os.path.dirname(__file__))
-STATICFILES_DIRS = (
-    os.path.join(SITE_ROOT, '.', 'static'),
-)
+#SITE_ROOT = os.path.normpath(os.path.dirname(__file__))
+#STATICFILES_DIRS = (
+#    os.path.join(SITE_ROOT, '.', 'static'),
+#)
 
 
 # Media uploads
 # http://stackoverflow.com/questions/6418072/accessing-media-files-in-django
 
+MEDIA_ROOT = '/srv/app/upload/'
 MEDIA_URL = '/upload/'
 
 #HTML editor
