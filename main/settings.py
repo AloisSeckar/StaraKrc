@@ -25,7 +25,7 @@ SECRET_KEY = 'do%98oyzmjg%)m_@-$jqrs80+s!+6=nv-m4e5_^9i#)8ngk7gu'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', 'krc-historie.cz']
+ALLOWED_HOSTS = ['localhost', 'krc-historie.cz', 'www.krc-historie.cz']
 
 
 # Application definition
