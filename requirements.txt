@@ -12,7 +12,7 @@ Keras-Applications==1.0.8
 Keras-Preprocessing==1.1.0
 Markdown==3.1.1
 mysql-connector-python==8.0.13
-numpy==1.19.2
+numpy==1.22.0
 opencv-python==4.4.0.44
 protobuf==3.6.1
 pytz==2018.7
