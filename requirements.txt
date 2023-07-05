@@ -5,7 +5,7 @@ django-bootstrap3==11.0.0
 django-tinymce==3.4.0
 gast==0.2.2
 google-pasta==0.1.7
-grpcio==1.23.0
+grpcio==1.53.0
 h5py==2.9.0
 Keras==2.2.4
 Keras-Applications==1.0.8
